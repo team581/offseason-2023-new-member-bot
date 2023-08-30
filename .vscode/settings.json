@@ -1,0 +1,36 @@
+{
+  "[gradle]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
+  "java.debug.settings.onBuildFailureProceed": true,
+  "java.test.config": [{
+    "workingDirectory": "${workspaceFolder}/build/jni/release",
+    "name": "WPIlibUnitTests",
+    "env": {
+      "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release",
+      "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
+    },
+    "vmargs": ["-Djava.library.path=${workspaceFolder}/build/jni/release"]
+  }],
+  "editor.defaultFormatter": "richardwillis.vscode-spotless-gradle",
+  "java.server.launchMode": "Standard",
+  "[java]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
+  "[json]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
+  "[ignore]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
+  "files.associations": {"*.path": "json"},
+  "[groovy]": {"editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"},
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "spotlessGradle.format.enable": true,
+  "files.exclude": {
+    "**/CVS": true,
+    "**/*~": true,
+    "**/.svn": true,
+    "**/.project": true,
+    "**/.classpath": true,
+    "bin/": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true
+  }
+}
