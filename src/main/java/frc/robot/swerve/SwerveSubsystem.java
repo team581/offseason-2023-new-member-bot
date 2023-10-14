@@ -112,6 +112,14 @@ public class SwerveSubsystem extends LifecycleSubsystem {
   }
 
   @Override
+  public void disabledPeriodic() {
+    frontRight.resetWheelAngle();
+    frontLeft.resetWheelAngle();
+    backRight.resetWheelAngle();
+    backLeft.resetWheelAngle();
+  }
+
+  @Override
   public void robotPeriodic() {
     frontLeft.log();
     frontRight.log();
@@ -243,6 +251,10 @@ public class SwerveSubsystem extends LifecycleSubsystem {
     return runOnce(() -> setXSwerve(false));
   }
 
+  public Command stopSwerveCommand() {
+    return runOnce(() -> setChassisSpeeds(new ChassisSpeeds(), true));
+  }
+
   public void driveTeleop(
       double sidewaysPercentage,
       double forwardPercentage,
@@ -252,6 +264,10 @@ public class SwerveSubsystem extends LifecycleSubsystem {
     Translation2d robotTranslation =
         new Translation2d(forwardPercentage, sidewaysPercentage).times(MAX_VELOCITY);
     Rotation2d fieldRelativeHeading = imu.getRobotHeading();
+
+    Logger.getInstance().recordOutput("Swerve/sidewaysPercentage", sidewaysPercentage);
+    Logger.getInstance().recordOutput("Swerve/forwardPercentage", forwardPercentage);
+    Logger.getInstance().recordOutput("Swerve/thetaPercentage", thetaPercentage);
 
     if (FmsSubsystem.isRedAlliance()) {
       fieldRelativeHeading = fieldRelativeHeading.plus(Rotation2d.fromDegrees(180));
