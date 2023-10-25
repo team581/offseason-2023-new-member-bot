@@ -65,7 +65,7 @@ public class Config {
       new SwerveModuleConstants(
           Rotation2d.fromDegrees(-75.42), SwerveCorner.BACK_RIGHT, false, false);
   // 104.58
-  
+
   public static final int LIGHTS_CANDLE_ID = 15;
   public static final int LIGHTS_LED_COUNT = 0;
 
