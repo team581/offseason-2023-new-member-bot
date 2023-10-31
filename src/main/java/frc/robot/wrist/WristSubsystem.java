@@ -123,4 +123,8 @@ public class WristSubsystem extends LifecycleSubsystem {
     return runOnce(() -> startHoming())
         .andThen(Commands.waitUntil(() -> getHomingState() == HomingState.HOMED));
   }
+
+  public Rotation2d getGoalAngle() {
+    return goalAngle;
+  }
 }

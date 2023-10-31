@@ -8,6 +8,7 @@ public enum SubsystemPriority {
   SUPERSTRUCTURE_MANAGER(20),
 
   // Run autobalance and autorotate before swerve
+  AUTOROTATE(11),
   AUTOBALANCE(11),
 
   WRIST(10),

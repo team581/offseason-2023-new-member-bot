@@ -72,7 +72,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     return false;
   }
 
-  public Command setState(IntakeState intakeState) {
+  public Command setStateCommand(IntakeState intakeState) {
     return run(() -> {
           setGoalState(intakeState);
         })

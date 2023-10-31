@@ -4,18 +4,33 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenixpro.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.autos.Autos;
 import frc.robot.config.Config;
 import frc.robot.controller.DriveController;
 import frc.robot.controller.RumbleControllerSubsystem;
 import frc.robot.fms.FmsSubsystem;
 import frc.robot.generated.BuildConstants;
+import frc.robot.imu.ImuSubsystem;
+import frc.robot.intake.IntakeState;
+import frc.robot.intake.IntakeSubsystem;
+import frc.robot.localization.LocalizationSubsystem;
+import frc.robot.managers.AutoRotate;
+import frc.robot.swerve.SwerveModule;
+import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.util.scheduling.LifecycleSubsystemManager;
+import frc.robot.wrist.Positions;
+import frc.robot.wrist.WristSubsystem;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -28,14 +43,50 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  * project.
  */
 public class Robot extends LoggedRobot {
+
   // Enables power distribution logging
   private final PowerDistribution pdpLogging = new PowerDistribution(0, ModuleType.kCTRE);
 
   private final DriveController driveController = new DriveController(0);
+  private final CommandXboxController operatorController = new CommandXboxController(1);
   private final RumbleControllerSubsystem rumbleController =
-      new RumbleControllerSubsystem(new XboxController(0));
+      new RumbleControllerSubsystem(new XboxController(1));
+
+  private final SwerveModule frontLeft =
+      new SwerveModule(
+          Config.SWERVE_FL_CONSTANTS,
+          new TalonFX(Config.SWERVE_FL_DRIVE_MOTOR_ID),
+          new TalonFX(Config.SWERVE_FL_STEER_MOTOR_ID),
+          new CANCoder(Config.SWERVE_FL_CANCODER_ID));
+  private final SwerveModule frontRight =
+      new SwerveModule(
+          Config.SWERVE_FR_CONSTANTS,
+          new TalonFX(Config.SWERVE_FR_DRIVE_MOTOR_ID),
+          new TalonFX(Config.SWERVE_FR_STEER_MOTOR_ID),
+          new CANCoder(Config.SWERVE_FR_CANCODER_ID));
+  private final SwerveModule backLeft =
+      new SwerveModule(
+          Config.SWERVE_BL_CONSTANTS,
+          new TalonFX(Config.SWERVE_BL_DRIVE_MOTOR_ID),
+          new TalonFX(Config.SWERVE_BL_STEER_MOTOR_ID),
+          new CANCoder(Config.SWERVE_BL_CANCODER_ID));
+  private final SwerveModule backRight =
+      new SwerveModule(
+          Config.SWERVE_BR_CONSTANTS,
+          new TalonFX(Config.SWERVE_BR_DRIVE_MOTOR_ID),
+          new TalonFX(Config.SWERVE_BR_STEER_MOTOR_ID),
+          new CANCoder(Config.SWERVE_BR_CANCODER_ID));
 
   private final FmsSubsystem fmsSubsystem = new FmsSubsystem();
+  private final ImuSubsystem imu = new ImuSubsystem(new Pigeon2(Config.PIGEON_ID));
+  private final SwerveSubsystem swerve =
+      new SwerveSubsystem(imu, frontRight, frontLeft, backRight, backLeft);
+  private final IntakeSubsystem intake =
+      new IntakeSubsystem(new CANSparkMax(Config.INTAKE_MOTOR_ID, MotorType.kBrushless));
+  private final WristSubsystem wrist =
+      new WristSubsystem(new CANSparkMax(Config.WRIST_MOTOR_ID, MotorType.kBrushless));
+  private final LocalizationSubsystem localization = new LocalizationSubsystem(swerve, imu);
+  private final AutoRotate autoRotate = new AutoRotate(swerve);
 
   private final Autos autos = new Autos();
   private Command autoCommand;
@@ -85,7 +136,56 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {}
 
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    swerve.setDefaultCommand(swerve.getDriveTeleopCommand(driveController));
+
+    // intake
+    driveController
+        .leftTrigger(defaultPeriodSecs)
+        .onTrue(
+            intake
+                .setStateCommand(IntakeState.INTAKING)
+                .alongWith(wrist.goToAngle(Positions.INTAKING))
+                .until(() -> intake.hasCube())
+                .andThen(wrist.goToAngle(Positions.STOWED)))
+        .onFalse(
+            wrist
+                .goToAngle(Positions.STOWED)
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
+    // outake
+    driveController
+        .rightTrigger()
+        .onTrue(
+            wrist
+                .goToAngle(Positions.OUTTAKING_LOW)
+                .unless(() -> wrist.getGoalAngle() != Positions.OUTTAKING_MID)
+                .andThen(intake.setStateCommand(IntakeState.OUTTAKING))
+                .andThen(wrist.goToAngle(Positions.STOWED)));
+    // snaps
+    driveController.x().onTrue(autoRotate.getCommand(() -> AutoRotate.getLeftAngle()));
+    driveController.b().onTrue(autoRotate.getCommand(() -> AutoRotate.getRightAngle()));
+    driveController.y().onTrue(autoRotate.getCommand(() -> AutoRotate.getForwardAngle()));
+    driveController.a().onTrue(autoRotate.getCommand(() -> AutoRotate.getBackwardsAngle()));
+
+    // get x swerve
+    driveController.start().onTrue(swerve.getXSwerveCommand());
+
+    // reset gyroscope
+    driveController.back().onTrue(localization.getZeroCommand());
+
+    // operator home wrist
+    operatorController.back().onTrue(wrist.getHomeCommand());
+    // operator stow
+    operatorController.x().onTrue(wrist.goToAngle(Positions.STOWED));
+    // set the superstructure mid
+    operatorController
+        .b()
+        .onTrue(wrist.goToAngle(Positions.OUTTAKING_MID))
+        .onFalse(
+            wrist
+                .goToAngle(Positions.STOWED)
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
+  }
 
   @Override
   public void robotPeriodic() {
