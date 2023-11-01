@@ -23,7 +23,7 @@ public class WristSubsystem extends LifecycleSubsystem {
   private final CANSparkMax motor;
   private final RelativeEncoder encoder;
   private final SparkMaxPIDController pid;
-  private final LinearFilter currentFilter = LinearFilter.movingAverage(0);
+  private final LinearFilter currentFilter = LinearFilter.movingAverage(8);
   private Rotation2d goalAngle = new Rotation2d();
   private HomingState homingState = HomingState.NOT_HOMED;
 
@@ -39,6 +39,12 @@ public class WristSubsystem extends LifecycleSubsystem {
     pid.setSmartMotionMaxAccel(Config.WRIST_MOTION_MAX_ACCELERATION, 0);
     pid.setSmartMotionMaxVelocity(Config.WRIST_MOTION_MAX_VELOCITY, 0);
     encoder.setPositionConversionFactor(Config.WRIST_GEARING);
+    encoder.setVelocityConversionFactor(Config.WRIST_GEARING);
+  }
+
+  @Override
+  public void disabledPeriodic() {
+    Logger.getInstance().recordOutput("Wrist/FilteredStatorCurrent", -1);
   }
 
   @Override
@@ -46,15 +52,17 @@ public class WristSubsystem extends LifecycleSubsystem {
     double rawCurrent = motor.getOutputCurrent();
     double filteredCurrent = currentFilter.calculate(rawCurrent);
 
+    Logger.getInstance().recordOutput("Wrist/FilteredStatorCurrent", filteredCurrent);
+
     if (homingState == HomingState.NOT_HOMED) {
       // set the motor to 0
       motor.set(0);
     }
     if (homingState == HomingState.HOMING) {
       // set the motor to run at like 10% ish
-      motor.set(0.1);
+      motor.set(-0.1);
 
-      if (filteredCurrent > 5) {
+      if (filteredCurrent > 7) {
         motor.set(0);
         encoder.setPosition(0);
         set(Rotation2d.fromDegrees(0));
@@ -62,7 +70,7 @@ public class WristSubsystem extends LifecycleSubsystem {
       }
     } else if (homingState == HomingState.HOMED) {
       // read the goal angle, set the motor to go to that position
-      pid.setReference(goalAngle.getRotations(), ControlType.kSmartMotion);
+      pid.setReference(goalAngle.getRotations(), ControlType.kPosition);
     }
   }
 
