@@ -65,7 +65,7 @@ public class Config {
 
   public static final int WRIST_MOTOR_ID = 16;
   public static final double WRIST_GEARING = 1.0 / 96.0;
-  public static final double WRIST_KP = 2.0;
+  public static final double WRIST_KP = 5.81;
   public static final double WRIST_KI = 0.0;
   public static final double WRIST_KD = 0.0;
   public static final int WRIST_MOTION_MAX_VELOCITY = 0;
