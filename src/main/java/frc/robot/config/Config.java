@@ -43,25 +43,25 @@ public class Config {
   public static final int SWERVE_FL_CANCODER_ID = 10;
   public static final SwerveModuleConstants SWERVE_FL_CONSTANTS =
       new SwerveModuleConstants(
-          Rotation2d.fromDegrees(0), SwerveCorner.FRONT_LEFT, false, false);
+          Rotation2d.fromDegrees(284.68), SwerveCorner.FRONT_LEFT, false, false);
   public static final int SWERVE_FR_DRIVE_MOTOR_ID = 4;
   public static final int SWERVE_FR_STEER_MOTOR_ID = 5;
   public static final int SWERVE_FR_CANCODER_ID = 11;
   public static final SwerveModuleConstants SWERVE_FR_CONSTANTS =
       new SwerveModuleConstants(
-          Rotation2d.fromDegrees(0), SwerveCorner.FRONT_RIGHT, false, false);
+          Rotation2d.fromDegrees(259.89), SwerveCorner.FRONT_RIGHT, false, false);
   public static final int SWERVE_BL_DRIVE_MOTOR_ID = 6;
   public static final int SWERVE_BL_STEER_MOTOR_ID = 7;
   public static final int SWERVE_BL_CANCODER_ID = 12;
   public static final SwerveModuleConstants SWERVE_BL_CONSTANTS =
       new SwerveModuleConstants(
-          Rotation2d.fromDegrees(0), SwerveCorner.BACK_LEFT, false, false);
+          Rotation2d.fromDegrees(35.60), SwerveCorner.BACK_LEFT, false, false);
   public static final int SWERVE_BR_DRIVE_MOTOR_ID = 8;
   public static final int SWERVE_BR_STEER_MOTOR_ID = 9;
   public static final int SWERVE_BR_CANCODER_ID = 13;
   public static final SwerveModuleConstants SWERVE_BR_CONSTANTS =
       new SwerveModuleConstants(
-          Rotation2d.fromDegrees(0), SwerveCorner.BACK_RIGHT, false, false);
+          Rotation2d.fromDegrees(116.37), SwerveCorner.BACK_RIGHT, false, false);
 
   public static final int WRIST_MOTOR_ID = 16;
   public static final double WRIST_GEARING = 1.0 / 96.0;
@@ -75,9 +75,9 @@ public class Config {
   public static final boolean INVERTED_INTAKE = true;
   public static final double INTAKE_GEARING = 12.0 / 20.0;
 
-  public static final double SWERVE_STEER_KP = 0.67;
+  public static final double SWERVE_STEER_KP = 5.0;
   public static final double SWERVE_STEER_KI = 0.0;
-  public static final double SWERVE_STEER_KD = 0.17;
+  public static final double SWERVE_STEER_KD = 0.0;
   public static final double SWERVE_STEER_KV = 0.0;
   public static final double SWERVE_STEER_KS = 0.0;
 
