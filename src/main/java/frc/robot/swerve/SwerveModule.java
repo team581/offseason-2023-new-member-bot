@@ -5,7 +5,7 @@
 package frc.robot.swerve;
 
 import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix6.StatusCode;
+import com.ctre.phoenixpro.StatusCode;
 import com.ctre.phoenixpro.StatusSignalValue;
 import com.ctre.phoenixpro.configs.ClosedLoopGeneralConfigs;
 import com.ctre.phoenixpro.configs.TalonFXConfiguration;
@@ -67,7 +67,7 @@ public class SwerveModule {
     driveMotorConfigs.Voltage.PeakForwardVoltage = 12;
     driveMotorConfigs.Voltage.PeakReverseVoltage = -12;
 
-    driveMotorConfigs.CurrentLimits.SupplyCurrentLimit = 35;
+    driveMotorConfigs.CurrentLimits.SupplyCurrentLimit = 15;
     driveMotorConfigs.CurrentLimits.SupplyCurrentLimitEnable = true;
 
     if (constants.driveInversion) {
@@ -122,6 +122,18 @@ public class SwerveModule {
         .recordOutput(
             "Swerve/" + constants.corner.toString() + "/DriveMotorStatorCurrent",
             driveMotorStatorCurrent.refresh().getValue());
+    Logger.getInstance()
+        .recordOutput(
+            "Swerve/" + constants.corner.toString() + "/CancoderPositionWithOffset",
+            getCancoderPosition().getDegrees());
+    Logger.getInstance()
+        .recordOutput(
+            "Swerve/" + constants.corner.toString() + "/CancoderPositionNoOffset",
+            getRawCancoderPosition().getDegrees());
+    Logger.getInstance()
+        .recordOutput(
+            "Swerve/" + constants.corner.toString() + "/SteerMotorPosition",
+            getSteerMotorPosition().getDegrees());
   }
 
   public void setDesiredState(

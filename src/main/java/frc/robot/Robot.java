@@ -5,7 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenixpro.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.autos.Autos;
 import frc.robot.config.Config;
@@ -141,7 +142,7 @@ public class Robot extends LoggedRobot {
 
     // intake
     driveController
-        .leftTrigger(defaultPeriodSecs)
+        .leftTrigger(0.5)
         .onTrue(
             intake
                 .setStateCommand(IntakeState.INTAKING)
@@ -151,16 +152,21 @@ public class Robot extends LoggedRobot {
         .onFalse(
             wrist
                 .goToAngle(Positions.STOWED)
-                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED))
+                .alongWith(Commands.runOnce(() -> intake.setHasCube(true))));
     // outake
     driveController
-        .rightTrigger()
+        .rightTrigger(0.5)
         .onTrue(
             wrist
                 .goToAngle(Positions.OUTTAKING_LOW)
                 .unless(() -> wrist.getGoalAngle() != Positions.OUTTAKING_MID)
                 .andThen(intake.setStateCommand(IntakeState.OUTTAKING))
-                .andThen(wrist.goToAngle(Positions.STOWED)));
+                .andThen(wrist.goToAngle(Positions.STOWED)))
+        .onFalse(
+            wrist
+                .goToAngle(Positions.STOWED)
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
     // snaps
     driveController.x().onTrue(autoRotate.getCommand(() -> AutoRotate.getLeftAngle()));
     driveController.b().onTrue(autoRotate.getCommand(() -> AutoRotate.getRightAngle()));

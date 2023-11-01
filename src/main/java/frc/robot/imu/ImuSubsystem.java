@@ -4,9 +4,7 @@
 
 package frc.robot.imu;
 
-import com.ctre.phoenix6.configs.MountPoseConfigs;
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
-import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -21,34 +19,20 @@ public class ImuSubsystem extends LifecycleSubsystem {
     super(SubsystemPriority.IMU);
 
     this.imu = imu;
-
-    Pigeon2Configuration imuConfig = new Pigeon2Configuration();
-
-    imu.getConfigurator().apply(imuConfig);
-  }
-
-  public void robotPeriodic() {
-    Logger.getInstance().recordOutput("Imu/RobotHeading", this.getRobotHeading().getDegrees());
-    Logger.getInstance()
-        .recordOutput("Imu/RobotHeadingRadians", this.getRobotHeading().getRadians());
   }
 
   public Rotation2d getRobotHeading() {
-    return Rotation2d.fromDegrees(imu.getYaw().getValue());
+    return Rotation2d.fromDegrees(imu.getYaw());
   }
 
   public Rotation2d getRoll() {
-    return Rotation2d.fromDegrees(imu.getRoll().getValue());
+    return Rotation2d.fromDegrees(imu.getRoll());
   }
 
   public void zero() {
+
     setAngle(new Rotation2d());
-
-    MountPoseConfigs mountPoseConfig = new MountPoseConfigs();
-
-    mountPoseConfig.MountPoseRoll = getRoll().getDegrees();
-
-    imu.getConfigurator().apply(mountPoseConfig);
+    this.imu.configMountPoseRoll(this.imu.getRoll());
   }
 
   public void setAngle(Rotation2d zeroAngle) {
@@ -61,5 +45,13 @@ public class ImuSubsystem extends LifecycleSubsystem {
 
   public Command getZeroCommand() {
     return Commands.runOnce(() -> zero());
+  }
+
+  public void robotPeriodic() {
+    Logger.getInstance().recordOutput("Imu/RobotHeading", this.getRobotHeading().getDegrees());
+    Logger.getInstance()
+        .recordOutput("Imu/RobotHeadingRadians", this.getRobotHeading().getRadians());
+    Logger.getInstance().recordOutput("Imu/Yaw", imu.getYaw());
+    Logger.getInstance().recordOutput("Imu/Roll", imu.getRoll());
   }
 }
