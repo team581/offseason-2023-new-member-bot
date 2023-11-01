@@ -29,7 +29,7 @@ public class Config {
 
   public static final int PIGEON_ID = 1;
 
-  public static final double WHEEL_DIAMETER = Units.inchesToMeters(3.84);
+  public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
   public static final double SWERVE_STEER_GEARING_REDUCTION = 12.8;
   public static final double SWERVE_DRIVE_GEARING_REDUCTION = 8.14;
 
