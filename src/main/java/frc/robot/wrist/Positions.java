@@ -8,7 +8,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 public class Positions {
   public static final Rotation2d INTAKING = Rotation2d.fromDegrees(180);
-  public static final Rotation2d OUTTAKING_LOW = Rotation2d.fromDegrees(0);
+  public static final Rotation2d OUTTAKING_STOWED = Rotation2d.fromDegrees(2);
+  public static final Rotation2d OUTTAKING_LOW = Rotation2d.fromDegrees(160);
   public static final Rotation2d OUTTAKING_MID = Rotation2d.fromDegrees(90);
   public static final Rotation2d STOWED = Rotation2d.fromDegrees(2);
 

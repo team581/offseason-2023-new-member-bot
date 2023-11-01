@@ -155,15 +155,18 @@ public class Robot extends LoggedRobot {
                 .goToAngle(Positions.STOWED)
                 .alongWith(intake.setStateCommand(IntakeState.STOPPED))
                 .alongWith(Commands.runOnce(() -> intake.setHasCube(true))));
-    // outake
+    // outtake
     driveController
         .rightTrigger(0.5)
-        .onTrue(
+        .onTrue(intake.setStateCommand(IntakeState.OUTTAKING))
+        .onFalse(
             wrist
-                .goToAngle(Positions.OUTTAKING_LOW)
-                .unless(() -> wrist.getGoalAngle() != Positions.OUTTAKING_MID)
-                .andThen(intake.setStateCommand(IntakeState.OUTTAKING))
-                .andThen(wrist.goToAngle(Positions.STOWED)))
+                .goToAngle(Positions.STOWED)
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
+    // shoot
+    driveController
+        .rightBumper()
+        .onTrue(intake.setStateCommand(IntakeState.SHOOTING))
         .onFalse(
             wrist
                 .goToAngle(Positions.STOWED)
@@ -194,6 +197,14 @@ public class Robot extends LoggedRobot {
     operatorController.back().onTrue(wrist.getHomeCommand());
     // operator stow
     operatorController.x().onTrue(wrist.goToAngle(Positions.STOWED));
+    // set the superstructure low
+    operatorController
+        .a()
+        .onTrue(wrist.goToAngle(Positions.OUTTAKING_LOW))
+        .onFalse(
+            wrist
+                .goToAngle(Positions.STOWED)
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
     // set the superstructure mid
     operatorController
         .b()

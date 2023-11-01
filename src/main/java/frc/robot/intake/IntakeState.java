@@ -7,5 +7,6 @@ package frc.robot.intake;
 public enum IntakeState {
   STOPPED,
   INTAKING,
-  OUTTAKING
+  OUTTAKING,
+  SHOOTING;
 }

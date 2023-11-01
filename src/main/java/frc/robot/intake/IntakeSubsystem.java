@@ -43,7 +43,9 @@ public class IntakeSubsystem extends LifecycleSubsystem {
 
   @Override
   public void enabledPeriodic() {
-    if (goalState == IntakeState.OUTTAKING) {
+    if (goalState == IntakeState.SHOOTING) {
+      motor.set(-1);
+    } else if (goalState == IntakeState.OUTTAKING) {
       motor.set(-0.5);
     } else if (holdingCube) {
       motor.set(0.1);
@@ -62,13 +64,13 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     Logger.getInstance().recordOutput("Intake/IntakeVoltage", intakeVoltage);
     Logger.getInstance().recordOutput("Intake/TheoreticalSpeed", theoreticalSpeed);
     Logger.getInstance().recordOutput("Intake/Threshold", threshold);
-    // if (intakeTimer.hasElapsed(0.5)) {
-    //   if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
-    //     holdingCube = true;
-    //   } else if (motorVelocity > threshold && goalState == IntakeState.OUTTAKING) {
-    //     holdingCube = false;
-    //   }
-    // }
+    if (intakeTimer.hasElapsed(0.5)) {
+      if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
+        holdingCube = true;
+      } else if (motorVelocity > threshold && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
+        holdingCube = false;
+      }
+    }
   }
 
   public void setGoalState(IntakeState newState) {
@@ -77,7 +79,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
         holdingCube = false;
       }
 
-      if (newState == IntakeState.INTAKING || newState == IntakeState.OUTTAKING) {
+      if (newState == IntakeState.INTAKING || newState == IntakeState.OUTTAKING || newState == IntakeState.SHOOTING) {
         intakeTimer.reset();
         intakeTimer.start();
       }
@@ -94,7 +96,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
       return true;
     }
 
-    if (goalState == IntakeState.OUTTAKING) {
+    if (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING) {
       return !hasCube();
     }
 
