@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.Autos;
 import frc.robot.config.Config;
 import frc.robot.controller.DriveController;
@@ -178,6 +179,16 @@ public class Robot extends LoggedRobot {
 
     // reset gyroscope
     driveController.back().onTrue(localization.getZeroCommand());
+
+    new Trigger(() -> driveController.getThetaPercentage() == 0)
+        .onFalse(autoRotate.getDisableCommand());
+
+    new Trigger(
+            () ->
+                driveController.getSidewaysPercentage() == 0
+                    && driveController.getForwardPercentage() == 0
+                    && driveController.getThetaPercentage() == 0)
+        .onFalse(swerve.disableXSwerveCommand());
 
     // operator home wrist
     operatorController.back().onTrue(wrist.getHomeCommand());
