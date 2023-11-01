@@ -79,7 +79,7 @@ public class Config {
   public static final boolean INVERTED_INTAKE = true;
 
   public static final double SWERVE_STEER_KV = 0.0;
-  public static final double SWERVE_STEER_KP = 3.0;
+  public static final double SWERVE_STEER_KP = 0.0;
   public static final double SWERVE_STEER_KI = 0.0;
   public static final double SWERVE_STEER_KD = 0.0;
   public static final double SWERVE_STEER_KS = 0.0;
@@ -89,16 +89,16 @@ public class Config {
   public static final double SWERVE_DRIVE_CURRENT_LIMIT = 0;
   public static final boolean SWERVE_DRIVE_LIMITS_ENABLE = true;
 
-  public static final double SWERVE_DRIVE_KP = 0.1;
+  public static final double SWERVE_DRIVE_KP = 0.0;
   public static final double SWERVE_DRIVE_KI = 0.0;
   public static final double SWERVE_DRIVE_KD = 0.0;
-  public static final double SWERVE_DRIVE_KV = 0.117;
+  public static final double SWERVE_DRIVE_KV = 0.0;
   public static final double SWERVE_DRIVE_KS = 0.0;
 
   public static final double STEER_MOTOR_LIMITS = 0.0;
   public static final boolean SWERVE_MOTOR_LIMITS_ENABLED = true;
-  public static final PIDConstants SWERVE_TRANSLATION_PID = new PIDConstants(7, 0, 0.05);
-  public static final PIDConstants SWERVE_ROTATION_PID = new PIDConstants(4.25, 0, 0.4);
+  public static final PIDConstants SWERVE_TRANSLATION_PID = new PIDConstants(0, 0, 0.0);
+  public static final PIDConstants SWERVE_ROTATION_PID = new PIDConstants(0.0, 0, 0.0);
   public static final PIDConstants SWERVE_ROTATION_SNAP_PID =
       new PIDConstants(0, 0, 0); // TODO: Edit these PID constants
   public static final boolean SWERVE_USE_FOC = true;
