@@ -40,6 +40,7 @@ public class WristSubsystem extends LifecycleSubsystem {
     pid.setSmartMotionMaxVelocity(Config.WRIST_MOTION_MAX_VELOCITY, 0);
     encoder.setPositionConversionFactor(Config.WRIST_GEARING);
     encoder.setVelocityConversionFactor(Config.WRIST_GEARING);
+    motor.setSmartCurrentLimit(Config.WRIST_CURRENT_LIMIT);
   }
 
   @Override

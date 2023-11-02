@@ -44,6 +44,6 @@ public class DriveController extends CommandXboxController {
 
   /** The rotation about the robot's z-axis as a percentage (<code>-1 <= x <= 1</code>) */
   public double getThetaPercentage() {
-    return joystickScale(-1 * getRightX());
+    return joystickScale(1 * getRightX());
   }
 }

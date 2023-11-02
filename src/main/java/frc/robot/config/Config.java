@@ -65,15 +65,17 @@ public class Config {
 
   public static final int WRIST_MOTOR_ID = 16;
   public static final double WRIST_GEARING = 1.0 / 96.0;
-  public static final double WRIST_KP = 5.81;
+  public static final double WRIST_KP = 7.0;
   public static final double WRIST_KI = 0.0;
   public static final double WRIST_KD = 0.0;
   public static final int WRIST_MOTION_MAX_VELOCITY = 0;
   public static final int WRIST_MOTION_MAX_ACCELERATION = 0;
+  public static final int WRIST_CURRENT_LIMIT = 30;
 
   public static final int INTAKE_MOTOR_ID = 17;
   public static final boolean INVERTED_INTAKE = true;
   public static final double INTAKE_GEARING = 12.0 / 20.0;
+  public static final int INTAKE_CURRENT_LIMIT = 10;
 
   public static final double SWERVE_STEER_KP = 5.0;
   public static final double SWERVE_STEER_KI = 0.0;
@@ -95,7 +97,7 @@ public class Config {
   public static final boolean SWERVE_MOTOR_LIMITS_ENABLED = true;
   public static final PIDConstants SWERVE_TRANSLATION_PID = new PIDConstants(2.5, 0, 0);
   public static final PIDConstants SWERVE_ROTATION_PID = new PIDConstants(4.5, 0, 0.1);
-  public static final PIDConstants SWERVE_ROTATION_SNAP_PID = new PIDConstants(7.5, 0, 0.5);
+  public static final PIDConstants SWERVE_ROTATION_SNAP_PID = new PIDConstants(5, 0, 2);
   public static final boolean SWERVE_USE_FOC = true;
 
   private Config() {}

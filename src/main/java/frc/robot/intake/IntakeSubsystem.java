@@ -33,6 +33,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
 
     encoder.setPositionConversionFactor(Config.INTAKE_GEARING);
     encoder.setVelocityConversionFactor(Config.INTAKE_GEARING);
+    motor.setSmartCurrentLimit(Config.INTAKE_CURRENT_LIMIT);
   }
 
   @Override
@@ -64,13 +65,14 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     Logger.getInstance().recordOutput("Intake/IntakeVoltage", intakeVoltage);
     Logger.getInstance().recordOutput("Intake/TheoreticalSpeed", theoreticalSpeed);
     Logger.getInstance().recordOutput("Intake/Threshold", threshold);
-    if (intakeTimer.hasElapsed(0.5)) {
+    if (intakeTimer.hasElapsed(1.5)) {
       if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
         holdingCube = true;
       } else if (motorVelocity > threshold && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
         holdingCube = false;
       }
     }
+
   }
 
   public void setGoalState(IntakeState newState) {
