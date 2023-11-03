@@ -73,7 +73,6 @@ public class IntakeSubsystem extends LifecycleSubsystem {
         holdingCube = false;
       }
     }
-
   }
 
   public void setGoalState(IntakeState newState) {

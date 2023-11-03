@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.autos.Autobalance;
 import frc.robot.autos.Autos;
 import frc.robot.config.Config;
 import frc.robot.controller.DriveController;
@@ -89,8 +90,9 @@ public class Robot extends LoggedRobot {
       new WristSubsystem(new CANSparkMax(Config.WRIST_MOTOR_ID, MotorType.kBrushless));
   private final LocalizationSubsystem localization = new LocalizationSubsystem(swerve, imu);
   private final AutoRotate autoRotate = new AutoRotate(swerve);
+  private final Autobalance autobalance = new Autobalance(swerve, imu);
 
-  private final Autos autos = new Autos(localization, swerve, intake, wrist);
+  private final Autos autos = new Autos(localization, swerve, intake, wrist, autobalance);
 
   private Command autoCommand;
 

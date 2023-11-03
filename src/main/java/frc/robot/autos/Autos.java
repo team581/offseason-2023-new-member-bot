@@ -28,6 +28,7 @@ import java.lang.ref.WeakReference;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -66,20 +67,21 @@ public class Autos {
   private final SwerveSubsystem swerve;
   private final IntakeSubsystem intake;
   private final WristSubsystem wrist;
+  private final Autobalance autobalance;
 
   public Autos(
       LocalizationSubsystem localization,
       SwerveSubsystem swerve,
       IntakeSubsystem intake,
-      WristSubsystem wrist) {
-
-
-
+      WristSubsystem wrist,
+      Autobalance autobalance
+      ) {
 
     this.localization = localization;
     this.swerve = swerve;
     this.intake = intake;
     this.wrist = wrist;
+    this.autobalance = autobalance;
     Map<String, Command> eventMap =
         Map.ofEntries(
             Map.entry("preloadCube", Commands.runOnce(() -> intake.setHasCube(true))),
@@ -91,10 +93,13 @@ public class Autos {
                     .andThen(Commands.runOnce(() -> intake.setHasCube(false)))),
             Map.entry(
                 "scoreMid",
-                    wrist.goToAngle(Positions.OUTTAKING_MID).
-                    andThen(intake.setStateCommand(IntakeState.OUTTAKING)
-                    .withTimeout(3)
-                    .andThen(Commands.runOnce(() -> intake.setHasCube(false))))),
+                wrist
+                    .goToAngle(Positions.OUTTAKING_MID)
+                    .andThen(
+                        intake
+                            .setStateCommand(IntakeState.OUTTAKING)
+                            .withTimeout(3)
+                            .andThen(Commands.runOnce(() -> intake.setHasCube(false))))),
             Map.entry("home", wrist.getHomeCommand().withTimeout(3)),
             Map.entry(
                 "intakeCube",
@@ -136,10 +141,9 @@ public class Autos {
         .onCommandFinish(
             command -> System.out.println("[COMMANDS] Finished command " + command.getName()));
 
-
-            for (AutoKindWithoutTeam autoKind : EnumSet.allOf(AutoKindWithoutTeam.class)) {
-              autoChooser.addOption(autoKind.toString(), autoKind);
-            }
+    for (AutoKindWithoutTeam autoKind : EnumSet.allOf(AutoKindWithoutTeam.class)) {
+      autoChooser.addOption(autoKind.toString(), autoKind);
+    }
 
     if (Config.IS_DEVELOPMENT) {
       PathPlannerServer.startServer(5811);
@@ -176,20 +180,52 @@ public class Autos {
         });
   }
 
+  private Command buildAutoCommand(AutoKind auto) {
+    WeakReference<Command> ref = autosCache.get(auto);
+    if (ref != null && ref.get() != null) {
+      Command autoCommand = ref.get();
+
+      if (autoCommand != null) {
+        return autoCommand;
+      }
+    }
+
+    String autoName = "Auto" + auto.toString();
+    Command autoCommand = Commands.runOnce(() -> swerve.driveTeleop(0, 0, 0, true, true), swerve);
+
+    if (auto == AutoKind.DO_NOTHING) {
+      return autoCommand
+          .andThen(localization.getZeroAwayCommand())
+          .andThen(wrist.getHomeCommand())
+          .withName(autoName);
+    }
+
+    List<PathPlannerTrajectory> pathGroup = Paths.getInstance().getPath(auto);
+
+      autoCommand = autoCommand.andThen(autoBuilder.fullAuto(pathGroup));
+
+
+    if (auto.autoBalance) {
+      autoCommand = autoCommand.andThen(this.autobalance.getCommand());
+    }
+
+    autoCommand = autoCommand.withName(autoName);
+
+    autosCache.put(auto, new WeakReference<>(autoCommand));
+
+    return autoCommand;
+  }
+
   public Command getAutoCommand() {
     AutoKindWithoutTeam rawAuto = autoChooser.get();
 
     if (rawAuto == null) {
-      rawAuto = AutoKindWithoutTeam.DO_NOTHING;
+      rawAuto = AutoKindWithoutTeam.MID_1_BALANCE;
     }
 
     AutoKind auto = FmsSubsystem.isRedAlliance() ? rawAuto.redVersion : rawAuto.blueVersion;
 
-    if (auto == AutoKind.DO_NOTHING) {
-      return Commands.none();
-    }
-
-    return autoBuilder.fullAuto(Paths.getInstance().getPath(auto));
+    return buildAutoCommand(auto);
   }
 
   public void clearCache() {
