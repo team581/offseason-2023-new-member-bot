@@ -90,7 +90,8 @@ public class Robot extends LoggedRobot {
   private final LocalizationSubsystem localization = new LocalizationSubsystem(swerve, imu);
   private final AutoRotate autoRotate = new AutoRotate(swerve);
 
-  private final Autos autos = new Autos();
+  private final Autos autos = new Autos(localization, swerve, intake, wrist);
+
   private Command autoCommand;
 
   public Robot() {

@@ -5,7 +5,8 @@
 package frc.robot.autos;
 
 public enum AutoKindWithoutTeam {
-  DO_NOTHING(AutoKind.DO_NOTHING, AutoKind.DO_NOTHING);
+  DO_NOTHING(AutoKind.DO_NOTHING, AutoKind.DO_NOTHING),
+  MID_1_BALANCE(AutoKind.RED_MID_1_BALANCE, AutoKind.BLUE_MID_1_BALANCE);
 
   public final AutoKind redVersion;
   public final AutoKind blueVersion;

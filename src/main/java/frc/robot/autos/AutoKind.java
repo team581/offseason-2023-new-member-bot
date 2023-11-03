@@ -7,7 +7,9 @@ package frc.robot.autos;
 import com.pathplanner.lib.PathConstraints;
 
 public enum AutoKind {
-  DO_NOTHING("", 0.01, 0.01, false);
+  DO_NOTHING("", 0.01, 0.01, false),
+  BLUE_MID_1_BALANCE("BlueMid1Balance", 4, 3, true),
+  RED_MID_1_BALANCE("RedMid1Balance", 4, 3, true);
 
   public final String pathName;
   public final PathConstraints constraints;

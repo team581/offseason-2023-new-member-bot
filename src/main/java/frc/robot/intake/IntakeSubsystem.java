@@ -68,7 +68,8 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     if (intakeTimer.hasElapsed(1.5)) {
       if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
         holdingCube = true;
-      } else if (motorVelocity > threshold && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
+      } else if (motorVelocity > threshold
+          && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
         holdingCube = false;
       }
     }
@@ -81,7 +82,9 @@ public class IntakeSubsystem extends LifecycleSubsystem {
         holdingCube = false;
       }
 
-      if (newState == IntakeState.INTAKING || newState == IntakeState.OUTTAKING || newState == IntakeState.SHOOTING) {
+      if (newState == IntakeState.INTAKING
+          || newState == IntakeState.OUTTAKING
+          || newState == IntakeState.SHOOTING) {
         intakeTimer.reset();
         intakeTimer.start();
       }
