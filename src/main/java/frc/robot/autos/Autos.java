@@ -74,8 +74,7 @@ public class Autos {
       SwerveSubsystem swerve,
       IntakeSubsystem intake,
       WristSubsystem wrist,
-      Autobalance autobalance
-      ) {
+      Autobalance autobalance) {
 
     this.localization = localization;
     this.swerve = swerve;
@@ -202,8 +201,7 @@ public class Autos {
 
     List<PathPlannerTrajectory> pathGroup = Paths.getInstance().getPath(auto);
 
-      autoCommand = autoCommand.andThen(autoBuilder.fullAuto(pathGroup));
-
+    autoCommand = autoCommand.andThen(autoBuilder.fullAuto(pathGroup));
 
     if (auto.autoBalance) {
       autoCommand = autoCommand.andThen(this.autobalance.getCommand());

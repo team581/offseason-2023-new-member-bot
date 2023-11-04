@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.902678763491499,
-        "y": 2.7881500559651844
+        "x": 1.9218931501159182,
+        "y": 0.7961008646937682
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6601884055126614,
-        "y": 2.7881500559651844
+        "x": 2.9218931501159178,
+        "y": 0.7961008646937682
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -28,47 +28,49 @@
     },
     {
       "anchorPoint": {
-        "x": 5.5979714291964475,
-        "y": 2.79
+        "x": 6.644946269589991,
+        "y": 0.9125292449430443
       },
       "prevControl": {
-        "x": 4.930024944042604,
-        "y": 2.79
+        "x": 5.462013981352804,
+        "y": 0.8814151938614391
       },
       "nextControl": {
-        "x": 4.930024944042604,
-        "y": 2.79
+        "x": 5.462013981352804,
+        "y": 0.8814151938614391
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "intake"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 3.951340786951909,
-        "y": 2.79
+        "x": 1.92,
+        "y": 0.8
       },
       "prevControl": {
-        "x": 4.413902687286038,
-        "y": 2.79
+        "x": 3.6036475008857667,
+        "y": 0.8357912247273543
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "balance"
+          "scoreLow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -76,8 +78,5 @@
       }
     }
   ],
-  "maxVelocity": 4.0,
-  "maxAcceleration": 3.0,
-  "isReversed": null,
   "markers": []
 }
