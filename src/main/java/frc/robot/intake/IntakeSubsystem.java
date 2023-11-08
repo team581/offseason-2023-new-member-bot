@@ -34,6 +34,8 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     encoder.setPositionConversionFactor(1.0);
     encoder.setVelocityConversionFactor(1.0);
     motor.setSmartCurrentLimit(Config.INTAKE_CURRENT_LIMIT);
+
+    motor.burnFlash();
   }
 
   @Override
