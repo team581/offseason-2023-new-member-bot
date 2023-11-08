@@ -57,8 +57,8 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     }
 
     // Game piece detection
-    double motorVelocity = velocityFilter.calculate(encoder.getVelocity());
-    double intakeVoltage = voltageFilter.calculate(motor.getAppliedOutput()) * 12.0;
+    double motorVelocity = Math.abs(velocityFilter.calculate(encoder.getVelocity()));
+    double intakeVoltage = Math.abs(voltageFilter.calculate(motor.getAppliedOutput()) * 12.0);
     double theoreticalSpeed = intakeVoltage * (5700.0 / 12.0); // Neo Max is 5700
     double threshold = theoreticalSpeed * 0.5;
     Logger.getInstance().recordOutput("Intake/MotorVelocity", motorVelocity);
@@ -68,10 +68,10 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     if (intakeTimer.hasElapsed(1.5)) {
       if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
         holdingCube = true;
-      } else if (motorVelocity > threshold
-          && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
-        holdingCube = false;
       }
+    } else if (motorVelocity > threshold
+        && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
+      holdingCube = false;
     }
   }
 
