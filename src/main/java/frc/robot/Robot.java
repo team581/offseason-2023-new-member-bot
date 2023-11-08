@@ -175,10 +175,10 @@ public class Robot extends LoggedRobot {
                 .goToAngle(Positions.STOWED)
                 .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
     // snaps
-    driveController.x().onTrue(autoRotate.getCommand(() -> AutoRotate.getLeftAngle()));
-    driveController.b().onTrue(autoRotate.getCommand(() -> AutoRotate.getRightAngle()));
-    driveController.y().onTrue(autoRotate.getCommand(() -> AutoRotate.getForwardAngle()));
-    driveController.a().onTrue(autoRotate.getCommand(() -> AutoRotate.getBackwardsAngle()));
+    driveController.b().onTrue(autoRotate.getCommand(() -> AutoRotate.getLeftAngle()));
+    driveController.x().onTrue(autoRotate.getCommand(() -> AutoRotate.getRightAngle()));
+    driveController.a().onTrue(autoRotate.getCommand(() -> AutoRotate.getForwardAngle()));
+    driveController.y().onTrue(autoRotate.getCommand(() -> AutoRotate.getBackwardsAngle()));
 
     // get x swerve
     driveController.start().onTrue(swerve.getXSwerveCommand());
