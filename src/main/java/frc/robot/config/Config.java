@@ -82,18 +82,12 @@ public class Config {
   public static final double SWERVE_STEER_KV = 0.0;
   public static final double SWERVE_STEER_KS = 0.0;
 
-  public static final int SWERVE_DRIVE_VOLTAGE_PEAK_FORWARD_VOLTAGE = 0;
-  public static final int SWERVE_DRIVE_VOLTAGE_PEAK_REVERSE_VOLTAGE = 0;
-  public static final double SWERVE_DRIVE_CURRENT_LIMIT = 0;
-  public static final boolean SWERVE_DRIVE_LIMITS_ENABLE = true;
-
   public static final double SWERVE_DRIVE_KP = 0.24;
   public static final double SWERVE_DRIVE_KI = 0.0;
   public static final double SWERVE_DRIVE_KD = 0.0;
   public static final double SWERVE_DRIVE_KV = 0.1185;
   public static final double SWERVE_DRIVE_KS = 0.0;
 
-  public static final boolean SWERVE_MOTOR_LIMITS_ENABLED = true;
   public static final PIDConstants SWERVE_TRANSLATION_PID = new PIDConstants(2.5, 0, 0);
   public static final PIDConstants SWERVE_ROTATION_PID = new PIDConstants(4.5, 0, 0.1);
   public static final PIDConstants SWERVE_ROTATION_SNAP_PID = new PIDConstants(5, 0, 2);
