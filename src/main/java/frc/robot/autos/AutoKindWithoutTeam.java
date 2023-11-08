@@ -6,7 +6,10 @@ package frc.robot.autos;
 
 public enum AutoKindWithoutTeam {
   DO_NOTHING(AutoKind.DO_NOTHING, AutoKind.DO_NOTHING),
-  MID_1_BALANCE(AutoKind.RED_MID_1_BALANCE, AutoKind.BLUE_MID_1_BALANCE);
+  MID_1_BALANCE(AutoKind.RED_MID_1_BALANCE, AutoKind.BLUE_MID_1_BALANCE),
+  MID_1(AutoKind.RED_MID_1, AutoKind.BLUE_MID_1),
+  FLAT_2(AutoKind.RED_FLAT_2, AutoKind.BLUE_FLAT_2),
+  BUMP_3(AutoKind.RED_BUMP_3, AutoKind.BLUE_BUMP_3);
 
   public final AutoKind redVersion;
   public final AutoKind blueVersion;
@@ -16,3 +19,4 @@ public enum AutoKindWithoutTeam {
     this.blueVersion = blueVersion;
   }
 }
+

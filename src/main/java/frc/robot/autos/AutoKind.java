@@ -23,7 +23,8 @@ public enum AutoKind {
   BLUE_BUMP_2("BlueBump2", 4,3, false),
 
 
-  BLUE_BUMP_3("BlueBump3", 4, 3, false);
+  BLUE_BUMP_3("BlueBump3", 4, 3, false),
+  RED_BUMP_3("RedBump3", 4, 3, false);
 
   public final String pathName;
   public final PathConstraints constraints;
