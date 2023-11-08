@@ -68,10 +68,10 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     if (intakeTimer.hasElapsed(1.5)) {
       if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
         holdingCube = true;
+      } else if (motorVelocity > threshold
+          && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
+        holdingCube = false;
       }
-    } else if (motorVelocity > threshold
-        && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
-      holdingCube = false;
     }
   }
 
