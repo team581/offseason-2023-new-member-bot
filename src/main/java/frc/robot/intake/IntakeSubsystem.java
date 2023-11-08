@@ -31,8 +31,8 @@ public class IntakeSubsystem extends LifecycleSubsystem {
 
     motor.setInverted(Config.INVERTED_INTAKE);
 
-    encoder.setPositionConversionFactor(Config.INTAKE_GEARING);
-    encoder.setVelocityConversionFactor(Config.INTAKE_GEARING);
+    encoder.setPositionConversionFactor(1.0);
+    encoder.setVelocityConversionFactor(1.0);
     motor.setSmartCurrentLimit(Config.INTAKE_CURRENT_LIMIT);
   }
 
