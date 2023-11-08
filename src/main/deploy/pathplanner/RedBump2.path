@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.845414249575103,
-        "y": 2.8643188824349104
+        "x": 14.704632331736798,
+        "y": 0.9398637366144159
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6029238915962654,
-        "y": 2.8643188824349104
+        "x": 13.7046323317368,
+        "y": 0.9398637366144159
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 180,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -19,7 +19,7 @@
         "names": [
           "home",
           "preload",
-          "scoreLow"
+          "scoreMid"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -28,25 +28,25 @@
     },
     {
       "anchorPoint": {
-        "x": 7.266828393131308,
-        "y": 2.86
+        "x": 9.895053730410009,
+        "y": 0.9125292449430443
       },
       "prevControl": {
-        "x": 6.598881907977464,
-        "y": 2.86
+        "x": 11.077986018647195,
+        "y": 0.8814151938614391
       },
       "nextControl": {
-        "x": 6.598881907977464,
-        "y": 2.86
+        "x": 11.077986018647195,
+        "y": 0.8814151938614391
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 180,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "stop"
+          "intake"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -55,22 +55,22 @@
     },
     {
       "anchorPoint": {
-        "x": 4.329642026123224,
-        "y": 2.86
+        "x": 14.710177015198772,
+        "y": 0.9473031860076443
       },
       "prevControl": {
-        "x": 4.792203926457353,
-        "y": 2.86
+        "x": 13.026529514313005,
+        "y": 0.9830944107349986
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 180,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "balance"
+          "scoreLow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -78,8 +78,5 @@
       }
     }
   ],
-  "maxVelocity": 4.0,
-  "maxAcceleration": 3.0,
-  "isReversed": null,
   "markers": []
 }
