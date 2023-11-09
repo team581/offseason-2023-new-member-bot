@@ -68,7 +68,6 @@ public class Autos {
   private final IntakeSubsystem intake;
   private final WristSubsystem wrist;
   private final Autobalance autobalance;
-
   public Autos(
       LocalizationSubsystem localization,
       SwerveSubsystem swerve,

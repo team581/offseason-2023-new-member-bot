@@ -18,10 +18,10 @@ public enum AutoKind {
   RED_FLAT_2("RedFlat2", 4, 3, false),
 
   BLUE_FLAT_3("BlueFlat3", 4, 3, false),
-
+  RED_FLAT_3("RedFlat3", 4, 3, false),
 
   BLUE_BUMP_2("BlueBump2", 4,3, false),
-
+  RED_BUMP_2("RedBump2", 4, 3, false),
 
   BLUE_BUMP_3("BlueBump3", 4, 3, false),
   RED_BUMP_3("RedBump3", 4, 3, false);
