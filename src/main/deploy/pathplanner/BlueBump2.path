@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.845414249575103,
-        "y": 2.8643188824349104
+        "x": 1.87327744530091,
+        "y": 0.9234490801784156
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6029238915962654,
-        "y": 2.8643188824349104
+        "x": 2.9248226748842034,
+        "y": 0.707445764015732
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -28,16 +28,16 @@
     },
     {
       "anchorPoint": {
-        "x": 7.266828393131308,
-        "y": 2.86
+        "x": 7.084232792072272,
+        "y": 0.7442939751524409
       },
       "prevControl": {
-        "x": 6.598881907977464,
-        "y": 2.86
+        "x": 5.7532095876293665,
+        "y": 0.663367524983458
       },
       "nextControl": {
-        "x": 6.598881907977464,
-        "y": 2.86
+        "x": 5.7532095876293665,
+        "y": 0.663367524983458
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
@@ -45,9 +45,7 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [
-          "stop"
-        ],
+        "names": [],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
@@ -55,12 +53,12 @@
     },
     {
       "anchorPoint": {
-        "x": 4.329642026123224,
-        "y": 2.86
+        "x": 2.0546264898262283,
+        "y": 1.8318896196908638
       },
       "prevControl": {
-        "x": 4.792203926457353,
-        "y": 2.86
+        "x": 1.8492936975921725,
+        "y": 0.07359669775072086
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -70,7 +68,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "balance"
+          "scoreLow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -78,8 +76,18 @@
       }
     }
   ],
-  "maxVelocity": 4.0,
-  "maxAcceleration": 3.0,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.6482954545454549,
+      "names": [
+        "intakeCube"
+      ]
+    },
+    {
+      "position": 1.180397727272727,
+      "names": [
+        "stow"
+      ]
+    }
+  ]
 }

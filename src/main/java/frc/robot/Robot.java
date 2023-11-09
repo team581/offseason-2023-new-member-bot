@@ -112,6 +112,7 @@ public class Robot extends LoggedRobot {
     Logger.getInstance().recordMetadata("GitSHA", BuildConstants.GIT_SHA);
     Logger.getInstance().recordMetadata("GitDate", BuildConstants.GIT_DATE);
     Logger.getInstance().recordMetadata("GitBranch", BuildConstants.GIT_BRANCH);
+
     switch (BuildConstants.DIRTY) {
       case 0:
         Logger.getInstance().recordMetadata("GitDirty", "All changes committed");
@@ -175,10 +176,10 @@ public class Robot extends LoggedRobot {
                 .goToAngle(Positions.STOWED)
                 .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
     // snaps
-    driveController.x().onTrue(autoRotate.getCommand(() -> AutoRotate.getLeftAngle()));
-    driveController.b().onTrue(autoRotate.getCommand(() -> AutoRotate.getRightAngle()));
-    driveController.y().onTrue(autoRotate.getCommand(() -> AutoRotate.getForwardAngle()));
-    driveController.a().onTrue(autoRotate.getCommand(() -> AutoRotate.getBackwardsAngle()));
+    driveController.b().onTrue(autoRotate.getCommand(() -> AutoRotate.getLeftAngle()));
+    driveController.x().onTrue(autoRotate.getCommand(() -> AutoRotate.getRightAngle()));
+    driveController.a().onTrue(autoRotate.getCommand(() -> AutoRotate.getForwardAngle()));
+    driveController.y().onTrue(autoRotate.getCommand(() -> AutoRotate.getBackwardsAngle()));
 
     // get x swerve
     driveController.start().onTrue(swerve.getXSwerveCommand());

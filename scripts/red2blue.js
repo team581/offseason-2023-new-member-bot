@@ -12,6 +12,10 @@ function serialize(path) {
 function translate(waypoint) {
   const { x } = waypoint.anchorPoint;
 
+  // The origin is on the left side
+  // There is a center line at x = 8.27
+  // We want to reflect the point across the center line
+
   waypoint.anchorPoint.x = 8.27 - (x - 8.27);
   waypoint.holonomicAngle = -waypoint.holonomicAngle - 180;
   waypoint.holonomicAngle %= 360;
