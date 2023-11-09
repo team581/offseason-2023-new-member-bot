@@ -41,6 +41,8 @@ public class WristSubsystem extends LifecycleSubsystem {
     encoder.setPositionConversionFactor(Config.WRIST_GEARING);
     encoder.setVelocityConversionFactor(Config.WRIST_GEARING);
     motor.setSmartCurrentLimit(Config.WRIST_CURRENT_LIMIT);
+
+    motor.burnFlash();
   }
 
   @Override

@@ -9,7 +9,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import frc.robot.localization.VisionMode;
 import frc.robot.swerve.SwerveCorner;
 import frc.robot.swerve.SwerveModuleConstants;
 
@@ -24,8 +23,6 @@ public class Config {
 
   public static final int PDP_ID = 0;
   public static final ModuleType PDP_TYPE = ModuleType.kCTRE;
-
-  public static final VisionMode VISION_MODE = VisionMode.OFF;
 
   public static final int PIGEON_ID = 1;
 
@@ -74,7 +71,6 @@ public class Config {
 
   public static final int INTAKE_MOTOR_ID = 17;
   public static final boolean INVERTED_INTAKE = true;
-  public static final double INTAKE_GEARING = 12.0 / 20.0;
   public static final int INTAKE_CURRENT_LIMIT = 10;
 
   public static final double SWERVE_STEER_KP = 5.0;
@@ -83,18 +79,12 @@ public class Config {
   public static final double SWERVE_STEER_KV = 0.0;
   public static final double SWERVE_STEER_KS = 0.0;
 
-  public static final int SWERVE_DRIVE_VOLTAGE_PEAK_FORWARD_VOLTAGE = 0;
-  public static final int SWERVE_DRIVE_VOLTAGE_PEAK_REVERSE_VOLTAGE = 0;
-  public static final double SWERVE_DRIVE_CURRENT_LIMIT = 0;
-  public static final boolean SWERVE_DRIVE_LIMITS_ENABLE = true;
-
   public static final double SWERVE_DRIVE_KP = 0.24;
   public static final double SWERVE_DRIVE_KI = 0.0;
   public static final double SWERVE_DRIVE_KD = 0.0;
   public static final double SWERVE_DRIVE_KV = 0.1185;
   public static final double SWERVE_DRIVE_KS = 0.0;
 
-  public static final boolean SWERVE_MOTOR_LIMITS_ENABLED = true;
   public static final PIDConstants SWERVE_TRANSLATION_PID = new PIDConstants(2.5, 0, 0);
   public static final PIDConstants SWERVE_ROTATION_PID = new PIDConstants(-4, 0, 0);
   public static final PIDConstants SWERVE_ROTATION_SNAP_PID = new PIDConstants(-4, 0, 0);

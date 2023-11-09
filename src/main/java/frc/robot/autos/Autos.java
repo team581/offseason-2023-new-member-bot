@@ -201,8 +201,6 @@ public class Autos {
     List<PathPlannerTrajectory> pathGroup = Paths.getInstance().getPath(auto);
 
     autoCommand = autoCommand.andThen(autoBuilder.fullAuto(pathGroup));
-    autoCommand = autoCommand.andThen(Commands.runOnce(() -> swerve.driveTeleop(0, 0, 0, true, true), swerve));
-
 
     if (auto.autoBalance) {
       autoCommand = autoCommand.andThen(this.autobalance.getCommand());

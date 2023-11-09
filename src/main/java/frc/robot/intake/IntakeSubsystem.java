@@ -31,9 +31,11 @@ public class IntakeSubsystem extends LifecycleSubsystem {
 
     motor.setInverted(Config.INVERTED_INTAKE);
 
-    encoder.setPositionConversionFactor(Config.INTAKE_GEARING);
-    encoder.setVelocityConversionFactor(Config.INTAKE_GEARING);
+    encoder.setPositionConversionFactor(1.0);
+    encoder.setVelocityConversionFactor(1.0);
     motor.setSmartCurrentLimit(Config.INTAKE_CURRENT_LIMIT);
+
+    motor.burnFlash();
   }
 
   @Override
@@ -57,8 +59,8 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     }
 
     // Game piece detection
-    double motorVelocity = velocityFilter.calculate(encoder.getVelocity());
-    double intakeVoltage = voltageFilter.calculate(motor.getAppliedOutput()) * 12.0;
+    double motorVelocity = Math.abs(velocityFilter.calculate(encoder.getVelocity()));
+    double intakeVoltage = Math.abs(voltageFilter.calculate(motor.getAppliedOutput()) * 12.0);
     double theoreticalSpeed = intakeVoltage * (5700.0 / 12.0); // Neo Max is 5700
     double threshold = theoreticalSpeed * 0.5;
     Logger.getInstance().recordOutput("Intake/MotorVelocity", motorVelocity);
