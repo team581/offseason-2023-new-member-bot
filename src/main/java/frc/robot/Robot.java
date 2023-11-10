@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -130,9 +131,12 @@ public class Robot extends LoggedRobot {
     // This must be run before any commands are scheduled
     LifecycleSubsystemManager.getInstance().ready();
 
+
     configureButtonBindings();
 
     enableLiveWindowInTest(false);
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
   }
 
   /**
@@ -151,14 +155,16 @@ public class Robot extends LoggedRobot {
         .onTrue(
             intake
                 .setStateCommand(IntakeState.INTAKING)
-                .alongWith(wrist.goToAngle(Positions.INTAKING))
+                .alongWith(wrist.goToAngle(Positions.INTAKING)
+                .alongWith(Commands.print("hghgh")))
                 .until(() -> intake.hasCube())
-                .andThen(wrist.goToAngle(Positions.STOWED)))
+                .andThen(wrist.goToAngle(Positions.STOWED).withName("TeleopIntakeCommand")))
+                //.alongWith(intake.setStateCommand(IntakeState.STOPPED))))
         .onFalse(
             wrist
                 .goToAngle(Positions.STOWED)
-                .alongWith(intake.setStateCommand(IntakeState.STOPPED))
-                .alongWith(Commands.runOnce(() -> intake.setHasCube(true))));
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
+                //.alongWith(Commands.runOnce(() -> intake.setHasCube(true))));
     // outtake
     driveController
         .rightTrigger(0.5)
@@ -224,6 +230,8 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().run();
 
     LifecycleSubsystemManager.getInstance().log();
+
+    Logger.getInstance().recordOutput("Intake/requestingIntake", driveController.leftTrigger(0.5).getAsBoolean());
   }
 
   @Override

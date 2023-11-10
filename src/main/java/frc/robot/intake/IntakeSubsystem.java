@@ -41,7 +41,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
   @Override
   public void robotPeriodic() {
     Logger.getInstance().recordOutput("Intake/IntakeState", goalState.toString());
-    Logger.getInstance().recordOutput("Intake/HasCube", hasCube());
+    Logger.getInstance().recordOutput("Intake/HoldingCube", holdingCube);
   }
 
   @Override
@@ -67,6 +67,9 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     Logger.getInstance().recordOutput("Intake/IntakeVoltage", intakeVoltage);
     Logger.getInstance().recordOutput("Intake/TheoreticalSpeed", theoreticalSpeed);
     Logger.getInstance().recordOutput("Intake/Threshold", threshold);
+    Logger.getInstance().recordOutput("Intake/IntakeTimer", intakeTimer.get());
+    Logger.getInstance().recordOutput("Intake/velocitySurpassThreshold", motorVelocity > threshold);
+
     if (intakeTimer.hasElapsed(1.5)) {
       if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
         holdingCube = true;
@@ -74,6 +77,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
           && (goalState == IntakeState.OUTTAKING || goalState == IntakeState.SHOOTING)) {
         holdingCube = false;
       }
+      Logger.getInstance().recordOutput("Intake/HasCube", hasCube());
     }
   }
 
