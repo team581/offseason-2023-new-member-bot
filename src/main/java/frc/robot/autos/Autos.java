@@ -93,12 +93,20 @@ public class Autos {
             Map.entry(
                 "scoreMid",
                 wrist
-                    .goToAngle(Positions.OUTTAKING_MID)
-                    .andThen(
-                        intake
-                            .setStateCommand(IntakeState.OUTTAKING)
-                            .withTimeout(3)
-                            .andThen(Commands.runOnce(() -> intake.setHasCube(false))))),
+                .goToAngle(Positions.SHOOT_ON_MID_FOLLOW_THRU)
+                .alongWith(
+                    Commands.waitUntil(() -> wrist.pastAngle(Positions.SHOOT_ON_MID))
+                        .andThen(intake.setStateCommand(IntakeState.SHOOTING)))
+                .andThen(Commands.runOnce(() -> intake.setHasCube(false)))),
+            Map.entry(
+              "scoreHigh",
+             wrist
+             .goToAngle(Positions.SHOOT_ON_HIGH_FOLLOW_THRU)
+             .alongWith(
+                 Commands.waitUntil(() -> wrist.pastAngle(Positions.SHOOT_ON_HIGH))
+                     .andThen(intake.setStateCommand(IntakeState.SHOOTING)))
+              .andThen(Commands.runOnce(() -> intake.setHasCube(false)))),
+
             Map.entry("home", wrist.getHomeCommand().withTimeout(3)),
             Map.entry(
                 "intakeCube",

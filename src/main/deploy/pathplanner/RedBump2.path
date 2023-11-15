@@ -19,7 +19,8 @@
         "names": [
           "home",
           "preload",
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -70,7 +71,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -78,5 +80,18 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.6690909090908629,
+      "names": [
+        "intakeCube"
+      ]
+    },
+    {
+      "position": 1.3963636363635585,
+      "names": [
+        "stow"
+      ]
+    }
+  ]
 }

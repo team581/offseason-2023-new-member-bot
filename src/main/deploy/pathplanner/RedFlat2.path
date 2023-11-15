@@ -19,7 +19,8 @@
         "names": [
           "home",
           "preload",
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -28,16 +29,16 @@
     },
     {
       "anchorPoint": {
-        "x": 9.754506474080623,
-        "y": 4.550679281991526
+        "x": 9.608205122259033,
+        "y": 4.562747727492601
       },
       "prevControl": {
-        "x": 10.22337445770565,
-        "y": 4.550679281991526
+        "x": 10.07707310588406,
+        "y": 4.562747727492601
       },
       "nextControl": {
-        "x": 10.22337445770565,
-        "y": 4.550679281991526
+        "x": 10.07707310588406,
+        "y": 4.562747727492601
       },
       "holonomicAngle": 0.0,
       "isReversal": true,
@@ -70,7 +71,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "score"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -78,5 +80,18 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.5963636363636233,
+      "names": [
+        "intakeCube"
+      ]
+    },
+    {
+      "position": 1.381818181818111,
+      "names": [
+        "stow"
+      ]
+    }
+  ]
 }

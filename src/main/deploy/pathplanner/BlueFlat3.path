@@ -19,7 +19,8 @@
         "names": [
           "home",
           "preload",
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -73,7 +74,8 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -176,7 +178,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -186,15 +189,27 @@
   ],
   "markers": [
     {
-      "position": 0.0,
+      "position": 0.6981818181817786,
       "names": [
-        "event"
+        "intakeCube"
       ]
     },
     {
-      "position": 0.0,
+      "position": 1.352727272727201,
       "names": [
-        "event"
+        "stow"
+      ]
+    },
+    {
+      "position": 2.967272727272592,
+      "names": [
+        "intakeCube"
+      ]
+    },
+    {
+      "position": 4.887272727272499,
+      "names": [
+        "stow"
       ]
     }
   ]

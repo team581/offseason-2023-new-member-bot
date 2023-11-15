@@ -10,7 +10,7 @@
         "x": 2.33799056266904,
         "y": 4.53447404705319
       },
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -19,7 +19,8 @@
         "names": [
           "home",
           "preload",
-          "scoreMid"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -28,16 +29,41 @@
     },
     {
       "anchorPoint": {
-        "x": 6.844744350814339,
-        "y": 4.588474876093861
+        "x": 4.885360983275461,
+        "y": 4.53
       },
       "prevControl": {
-        "x": 6.377112164852355,
-        "y": 4.588474876093861
+        "x": 4.596970165887906,
+        "y": 4.53
       },
       "nextControl": {
-        "x": 6.377112164852355,
-        "y": 4.588474876093861
+        "x": 5.173751800663019,
+        "y": 4.53
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.93230795876713,
+        "y": 4.597054101383524
+      },
+      "prevControl": {
+        "x": 6.464675772805147,
+        "y": 4.597054101383524
+      },
+      "nextControl": {
+        "x": 6.464675772805147,
+        "y": 4.597054101383524
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
@@ -69,8 +95,10 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "scoreLow"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -78,15 +106,15 @@
   ],
   "markers": [
     {
-      "position": 0.0,
+      "position": 2.439999999999932,
       "names": [
-        "event"
+        "stow"
       ]
     },
     {
-      "position": 0.0,
+      "position": 1.461818181818124,
       "names": [
-        "event"
+        "intakeCube"
       ]
     }
   ]

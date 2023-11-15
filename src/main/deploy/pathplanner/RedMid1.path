@@ -19,7 +19,8 @@
         "names": [
           "home",
           "preload",
-          "scoreLow"
+          "scoreHigh",
+          "stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
