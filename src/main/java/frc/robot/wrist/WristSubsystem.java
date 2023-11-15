@@ -121,6 +121,11 @@ public class WristSubsystem extends LifecycleSubsystem {
     return Math.abs(encoderAngle - angle.getDegrees()) < WRIST_TOLERANCE;
   }
 
+  public boolean pastAngle(Rotation2d angle) {
+    double encoderAngle = getWristAngle().getDegrees();
+    return encoderAngle > angle.getDegrees();
+  }
+
   // add a method to return a command which sets the goal angle to something and then exits the
   // command once at that angle
   public Command goToAngle(Rotation2d toGoalAngle) {

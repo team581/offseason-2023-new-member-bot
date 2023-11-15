@@ -12,6 +12,10 @@ public class Positions {
   public static final Rotation2d OUTTAKING_LOW = Rotation2d.fromDegrees(160);
   public static final Rotation2d OUTTAKING_MID = Rotation2d.fromDegrees(105);
   public static final Rotation2d STOWED = Rotation2d.fromDegrees(2);
+  public static final Rotation2d SHOOT_ON_HIGH = Rotation2d.fromDegrees(22);
+  public static final Rotation2d SHOOT_ON_HIGH_FOLLOW_THRU = Rotation2d.fromDegrees(110);
+  public static final Rotation2d SHOOT_ON_MID = Rotation2d.fromDegrees(30);
+  public static final Rotation2d SHOOT_ON_MID_FOLLOW_THRU = Rotation2d.fromDegrees(110);
 
   private Positions() {}
 }

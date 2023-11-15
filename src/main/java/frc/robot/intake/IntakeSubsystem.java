@@ -51,9 +51,9 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     } else if (goalState == IntakeState.OUTTAKING) {
       motor.set(-0.5);
     } else if (holdingCube) {
-      motor.set(0.1);
+      motor.set(0.45);
     } else if (goalState == IntakeState.INTAKING) {
-      motor.set(0.5);
+      motor.set(0.7);
     } else {
       motor.set(0);
     }
@@ -69,6 +69,7 @@ public class IntakeSubsystem extends LifecycleSubsystem {
     Logger.getInstance().recordOutput("Intake/Threshold", threshold);
     Logger.getInstance().recordOutput("Intake/IntakeTimer", intakeTimer.get());
     Logger.getInstance().recordOutput("Intake/velocitySurpassThreshold", motorVelocity > threshold);
+    Logger.getInstance().recordOutput("Intake/current", motor.getOutputCurrent());
 
     if (intakeTimer.hasElapsed(1.5)) {
       if (motorVelocity < threshold && goalState == IntakeState.INTAKING) {
