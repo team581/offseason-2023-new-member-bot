@@ -71,7 +71,7 @@ public class Config {
 
   public static final int INTAKE_MOTOR_ID = 17;
   public static final boolean INVERTED_INTAKE = true;
-  public static final int INTAKE_CURRENT_LIMIT = 10;
+  public static final int INTAKE_CURRENT_LIMIT = 35;
 
   public static final double SWERVE_STEER_KP = 5.0;
   public static final double SWERVE_STEER_KI = 0.0;
