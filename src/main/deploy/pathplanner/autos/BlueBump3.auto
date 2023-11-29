@@ -1,0 +1,30 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.87,
+      "y": 0.92
+    },
+    "rotation": 180.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueBump2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueBump3Part2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null
+}
