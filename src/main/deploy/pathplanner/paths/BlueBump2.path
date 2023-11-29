@@ -1,0 +1,153 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.87,
+        "y": 0.92
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.967084956757404,
+        "y": 0.6946012474377773
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 7.08,
+        "y": 0.74
+      },
+      "prevControl": {
+        "x": 5.668394180159019,
+        "y": 0.654157065572809
+      },
+      "nextControl": {
+        "x": 8.491605819840984,
+        "y": 0.8258429344271913
+      },
+      "isLocked": false
+    },
+    {
+      "anchor": {
+        "x": 2.05,
+        "y": 1.83
+      },
+      "prevControl": {
+        "x": 1.873634338158143,
+        "y": 0.31957120216705404
+      },
+      "nextControl": null,
+      "isLocked": false
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Start",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "home"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "preload"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "scoreHigh"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stow"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intakeCube"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stow",
+      "waypointRelativePos": 1.4,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stow"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "End",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "scoreMid"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stow"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null
+}
