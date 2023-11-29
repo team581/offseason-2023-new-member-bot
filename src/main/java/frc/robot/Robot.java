@@ -230,25 +230,23 @@ public class Robot extends LoggedRobot {
                 .alongWith(
                     Commands.waitUntil(() -> wrist.pastAngle(Positions.SHOOT_ON_HIGH))
                         .andThen(intake.setStateCommand(IntakeState.SHOOTING))))
-          .onFalse(
+        .onFalse(
             wrist
                 .goToAngle(Positions.STOWED)
                 .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
 
     operatorController
-                .povDown()
-                .onTrue(
-                    wrist
-                        .goToAngle(Positions.SHOOT_ON_MID_FOLLOW_THRU)
-                        .alongWith(
-                            Commands.waitUntil(() -> wrist.pastAngle(Positions.SHOOT_ON_MID))
-                                .andThen(intake.setStateCommand(IntakeState.SHOOTING))))
-                  .onFalse(
-                    wrist
-                        .goToAngle(Positions.STOWED)
-                        .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
-
-
+        .povDown()
+        .onTrue(
+            wrist
+                .goToAngle(Positions.SHOOT_ON_MID_FOLLOW_THRU)
+                .alongWith(
+                    Commands.waitUntil(() -> wrist.pastAngle(Positions.SHOOT_ON_MID))
+                        .andThen(intake.setStateCommand(IntakeState.SHOOTING))))
+        .onFalse(
+            wrist
+                .goToAngle(Positions.STOWED)
+                .alongWith(intake.setStateCommand(IntakeState.STOPPED)));
   }
 
   @Override
