@@ -4,10 +4,10 @@
 
 package frc.robot.autos;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import com.pathplanner.lib.server.PathPlannerServer;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.controllers.PPRamseteController;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -63,7 +63,7 @@ public class Autos {
   private final Map<AutoKind, WeakReference<Command>> autosCache = new EnumMap<>(AutoKind.class);
 
   private final LocalizationSubsystem localization;
-  private final SwerveAutoBuilder autoBuilder;
+
   private final SwerveSubsystem swerve;
   private final IntakeSubsystem intake;
   private final WristSubsystem wrist;
@@ -81,54 +81,6 @@ public class Autos {
     this.intake = intake;
     this.wrist = wrist;
     this.autobalance = autobalance;
-    Map<String, Command> eventMap =
-        Map.ofEntries(
-            Map.entry("preloadCube", Commands.runOnce(() -> intake.setHasCube(true))),
-            Map.entry(
-                "scoreLow",
-                intake
-                    .setStateCommand(IntakeState.OUTTAKING)
-                    .withTimeout(1)
-                    .andThen(Commands.runOnce(() -> intake.setHasCube(false)))),
-            Map.entry(
-                "scoreMid",
-                wrist
-                    .goToAngle(Positions.OUTTAKING_MID)
-                    .andThen(
-                        intake
-                            .setStateCommand(IntakeState.OUTTAKING)
-                            .withTimeout(3)
-                            .andThen(Commands.runOnce(() -> intake.setHasCube(false))))),
-            Map.entry("home", wrist.getHomeCommand().withTimeout(3)),
-            Map.entry(
-                "intakeCube",
-                intake
-                    .setStateCommand(IntakeState.INTAKING)
-                    .alongWith(wrist.goToAngle(Positions.INTAKING))
-                    .until(() -> intake.hasCube())
-                    .andThen(
-                        wrist
-                            .goToAngle(Positions.STOWED)
-                            .alongWith(intake.setStateCommand(IntakeState.STOPPED)))),
-            Map.entry(
-                "stow",
-                wrist
-                    .goToAngle(Positions.STOWED)
-                    .alongWith(intake.setStateCommand(IntakeState.STOPPED))));
-
-    eventMap = wrapAutoEventMap(eventMap);
-
-    autoBuilder =
-        new SwerveAutoBuilder(
-            localization::getPose,
-            localization::resetPose,
-            SwerveSubsystem.KINEMATICS,
-            Config.SWERVE_TRANSLATION_PID,
-            Config.SWERVE_ROTATION_PID,
-            (states) -> swerve.setModuleStates(states, false, false),
-            eventMap,
-            false,
-            swerve);
 
     CommandScheduler.getInstance()
         .onCommandInitialize(
@@ -144,9 +96,7 @@ public class Autos {
       autoChooser.addOption(autoKind.toString(), autoKind);
     }
 
-    if (Config.IS_DEVELOPMENT) {
-      PathPlannerServer.startServer(5811);
-    }
+
 
     Logger.getInstance().recordOutput("Autos/CurrentTrajectory", new Trajectory());
     Logger.getInstance().recordOutput("Autos/TargetPose", new Pose2d());
@@ -156,27 +106,6 @@ public class Autos {
     Logger.getInstance().recordOutput("Autos/TranslationError", new Pose2d());
     Logger.getInstance().recordOutput("Autos/RotationError", 0);
 
-    PPSwerveControllerCommand.setLoggingCallbacks(
-        (PathPlannerTrajectory activeTrajectory) -> {
-          Logger.getInstance().recordOutput("Autos/CurrentTrajectory", activeTrajectory);
-        },
-        (Pose2d targetPose) -> {
-          Logger.getInstance().recordOutput("Autos/TargetPose", targetPose);
-        },
-        (ChassisSpeeds setpointSpeeds) -> {
-          Logger.getInstance()
-              .recordOutput("Autos/SetpointSpeeds/X", setpointSpeeds.vxMetersPerSecond);
-          Logger.getInstance()
-              .recordOutput("Autos/SetpointSpeeds/Y", setpointSpeeds.vyMetersPerSecond);
-          Logger.getInstance()
-              .recordOutput("Autos/SetpointSpeeds/Omega", setpointSpeeds.omegaRadiansPerSecond);
-        },
-        (Translation2d translationError, Rotation2d rotationError) -> {
-          Logger.getInstance()
-              .recordOutput(
-                  "Autos/TranslationError", new Pose2d(translationError, new Rotation2d()));
-          Logger.getInstance().recordOutput("Autos/RotationError", rotationError.getDegrees());
-        });
   }
 
   private Command buildAutoCommand(AutoKind auto) {
@@ -201,7 +130,8 @@ public class Autos {
 
     List<PathPlannerTrajectory> pathGroup = Paths.getInstance().getPath(auto);
 
-    autoCommand = autoCommand.andThen(autoBuilder.fullAuto(pathGroup));
+    // todo: update
+    // autoCommand = autoCommand.andThen(autoBuilder.fullAuto(pathGroup));
 
     if (auto.autoBalance) {
       autoCommand = autoCommand.andThen(this.autobalance.getCommand());

@@ -4,7 +4,7 @@
 
 package frc.robot.autos;
 
-import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.path.PathConstraints;
 
 public enum AutoKind {
   DO_NOTHING("", 0.01, 0.01, false),
@@ -33,7 +33,7 @@ public enum AutoKind {
   private AutoKind(
       String pathName, double maxVelocity, double maxAcceleration, boolean autoBalance) {
     this.pathName = pathName;
-    this.constraints = new PathConstraints(maxVelocity, maxAcceleration);
+    this.constraints = new PathConstraints(maxVelocity, maxAcceleration, maxVelocity, maxAcceleration);
     this.autoBalance = autoBalance;
   }
 }

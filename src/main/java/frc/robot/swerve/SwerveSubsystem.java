@@ -4,8 +4,8 @@
 
 package frc.robot.swerve;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
+import com.pathplanner.lib.controllers.PPRamseteController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
