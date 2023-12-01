@@ -21,9 +21,10 @@ import frc.robot.fms.FmsSubsystem;
 import frc.robot.intake.IntakeState;
 import frc.robot.intake.IntakeSubsystem;
 import frc.robot.localization.LocalizationSubsystem;
-import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.wrist.Positions;
 import frc.robot.wrist.WristSubsystem;
+import frc.swerve.SwerveSubsystem;
+
 import java.lang.ref.WeakReference;
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -132,7 +133,7 @@ public class Autos {
             SwerveSubsystem.KINEMATICS,
             Config.SWERVE_TRANSLATION_PID,
             Config.SWERVE_ROTATION_PID,
-            (states) -> swerve.setModuleStates(states, false, false),
+            (states) -> swerve.getModuleStates(states, false, false),
             eventMap,
             false,
             swerve);
@@ -197,7 +198,7 @@ public class Autos {
     }
 
     String autoName = "Auto" + auto.toString();
-    Command autoCommand = Commands.runOnce(() -> swerve.driveTeleop(0, 0, 0, true, true), swerve);
+    Command autoCommand = Commands.runOnce(() -> swerve.driveTeleop(0.0, 0.0, 0.0), swerve);
 
     if (auto == AutoKind.DO_NOTHING) {
       return autoCommand

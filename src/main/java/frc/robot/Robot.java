@@ -4,9 +4,7 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.Pigeon2;
-import com.ctre.phoenixpro.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -30,11 +28,11 @@ import frc.robot.intake.IntakeState;
 import frc.robot.intake.IntakeSubsystem;
 import frc.robot.localization.LocalizationSubsystem;
 import frc.robot.managers.AutoRotate;
-import frc.robot.swerve.SwerveModule;
-import frc.robot.swerve.SwerveSubsystem;
 import frc.robot.util.scheduling.LifecycleSubsystemManager;
 import frc.robot.wrist.Positions;
 import frc.robot.wrist.WristSubsystem;
+import frc.swerve.SwerveSubsystem;
+
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -56,35 +54,11 @@ public class Robot extends LoggedRobot {
   private final RumbleControllerSubsystem rumbleController =
       new RumbleControllerSubsystem(new XboxController(1));
 
-  private final SwerveModule frontLeft =
-      new SwerveModule(
-          Config.SWERVE_FL_CONSTANTS,
-          new TalonFX(Config.SWERVE_FL_DRIVE_MOTOR_ID),
-          new TalonFX(Config.SWERVE_FL_STEER_MOTOR_ID),
-          new CANCoder(Config.SWERVE_FL_CANCODER_ID));
-  private final SwerveModule frontRight =
-      new SwerveModule(
-          Config.SWERVE_FR_CONSTANTS,
-          new TalonFX(Config.SWERVE_FR_DRIVE_MOTOR_ID),
-          new TalonFX(Config.SWERVE_FR_STEER_MOTOR_ID),
-          new CANCoder(Config.SWERVE_FR_CANCODER_ID));
-  private final SwerveModule backLeft =
-      new SwerveModule(
-          Config.SWERVE_BL_CONSTANTS,
-          new TalonFX(Config.SWERVE_BL_DRIVE_MOTOR_ID),
-          new TalonFX(Config.SWERVE_BL_STEER_MOTOR_ID),
-          new CANCoder(Config.SWERVE_BL_CANCODER_ID));
-  private final SwerveModule backRight =
-      new SwerveModule(
-          Config.SWERVE_BR_CONSTANTS,
-          new TalonFX(Config.SWERVE_BR_DRIVE_MOTOR_ID),
-          new TalonFX(Config.SWERVE_BR_STEER_MOTOR_ID),
-          new CANCoder(Config.SWERVE_BR_CANCODER_ID));
+
 
   private final FmsSubsystem fmsSubsystem = new FmsSubsystem();
   private final ImuSubsystem imu = new ImuSubsystem(new Pigeon2(Config.PIGEON_ID));
-  private final SwerveSubsystem swerve =
-      new SwerveSubsystem(imu, frontRight, frontLeft, backRight, backLeft);
+  private final SwerveSubsystem swerve = new SwerveSubsystem(imu);
   private final IntakeSubsystem intake =
       new IntakeSubsystem(new CANSparkMax(Config.INTAKE_MOTOR_ID, MotorType.kBrushless));
   private final WristSubsystem wrist =
@@ -198,8 +172,7 @@ public class Robot extends LoggedRobot {
             () ->
                 driveController.getSidewaysPercentage() == 0
                     && driveController.getForwardPercentage() == 0
-                    && driveController.getThetaPercentage() == 0)
-        .onFalse(swerve.disableXSwerveCommand());
+                    && driveController.getThetaPercentage() == 0);
 
     // operator home wrist
     operatorController.back().onTrue(wrist.getHomeCommand());
